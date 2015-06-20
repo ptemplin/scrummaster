@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ScrumMaster</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_to_back_log">AddToBackLogActivity</string>
+    <string name="title_activity_view_backlog">ViewBacklogActivity</string>
+    <string name="title_activity_view_task">ViewTaskActivity</string>
+    <string name="title_activity_sprint">SprintActivity</string>
+    <string name="title_activity_build_sprint">BuildSprintActivity</string>
+
+</resources>

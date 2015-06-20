@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.petertemplin.scrummaster" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.AddToBacklogActivity"
+            android:label="@string/title_activity_add_to_back_log"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ViewBacklogActivity"
+            android:label="@string/title_activity_view_backlog" >
+        </activity>
+        <activity
+            android:name=".activity.ViewTaskActivity"
+            android:label="@string/title_activity_view_task"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.SprintActivity"
+            android:label="@string/title_activity_sprint" >
+        </activity>
+        <activity
+            android:name=".activity.BuildSprintActivity"
+            android:label="@string/title_activity_build_sprint" >
+        </activity>
+    </application>
+
+</manifest>
