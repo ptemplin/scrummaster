@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.petertemplin.scrummaster.R;
+import com.petertemplin.scrummaster.data.DataUtils;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -26,6 +27,7 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        addToBacklogButton.setBackgroundColor(0xFF22CC22);
         Button viewBacklogButton = (Button) findViewById(R.id.viewBacklogButton);
         viewBacklogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,6 +36,7 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        viewBacklogButton.setBackgroundColor(0xFF22CC22);
         Button currentSprintButton = (Button) findViewById(R.id.currentSprintButton);
         currentSprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +45,7 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        currentSprintButton.setBackgroundColor(0xFFCC2222);
         Button buildSprintButton = (Button) findViewById(R.id.buildSprintButton);
         buildSprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +54,7 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        buildSprintButton.setBackgroundColor(0xFFCC2222);
     }
 
 
@@ -73,5 +78,9 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void resetDatabase(View view) {
+        DataUtils.getInstance(this).resetDatabase(this);
     }
 }
