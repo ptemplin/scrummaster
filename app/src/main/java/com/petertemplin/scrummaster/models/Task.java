@@ -1,5 +1,7 @@
 package com.petertemplin.scrummaster.models;
 
+import com.petertemplin.scrummaster.data.DataUtils;
+
 /**
  * Created by Me on 2015-06-20.
  */
@@ -23,9 +25,43 @@ public class Task {
 
     private int completedDate = 0;
 
+    private int sprintId = 0;
+
+    private int projectId = 0;
+
+    private int backlogId = 0;
+
+    public int getSprintId() {
+        return sprintId;
+    }
+
+    public void setSprintId(int sprintId) {
+        this.sprintId = sprintId;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    public int getBacklogId() {
+        return backlogId;
+    }
+
+    public void setBacklogId(int backlogId) {
+        this.backlogId = backlogId;
+    }
+
     public Task(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -90,6 +126,17 @@ public class Task {
 
     public void setCompletedDate(int completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public static int getIdFromTitle(String title) {
+        title = title.substring(0, title.indexOf("-"));
+        int taskId = 0;
+        try {
+            taskId = Integer.parseInt(title);
+        } catch (Exception e) {
+            taskId = 1;
+        }
+        return taskId;
     }
 
     public String toString() {

@@ -13,7 +13,7 @@ import com.petertemplin.scrummaster.models.Task;
 
 public class ViewTaskActivity extends ActionBarActivity {
 
-    public static final String VIEWING_TASK_ID = "taskId";
+    public static final String VIEWING_TASK_TITLE = "taskTitle";
 
     public Task task;
 
@@ -22,14 +22,8 @@ public class ViewTaskActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
 
-        String taskTitle = getIntent().getStringExtra(VIEWING_TASK_ID);
-        taskTitle = taskTitle.substring(0, taskTitle.indexOf("-"));
-        int taskId = 0;
-        try {
-            taskId = Integer.parseInt(taskTitle);
-        } catch (Exception e) {
-            taskId = 1;
-        }
+        String taskTitle = getIntent().getStringExtra(VIEWING_TASK_TITLE);
+        int taskId = Task.getIdFromTitle(taskTitle);
         task = DataUtils.getInstance(this).findTaskById(taskId);
 
         // setup all of the fields of the activity

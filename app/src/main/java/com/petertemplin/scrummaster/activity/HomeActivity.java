@@ -27,7 +27,6 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        addToBacklogButton.setBackgroundColor(0xFF22CC22);
         Button viewBacklogButton = (Button) findViewById(R.id.viewBacklogButton);
         viewBacklogButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +35,6 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        viewBacklogButton.setBackgroundColor(0xFF22CC22);
         Button currentSprintButton = (Button) findViewById(R.id.currentSprintButton);
         currentSprintButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,16 +43,6 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
-        currentSprintButton.setBackgroundColor(0xFFCC2222);
-        Button buildSprintButton = (Button) findViewById(R.id.buildSprintButton);
-        buildSprintButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, BuildSprintActivity.class);
-                startActivity(intent);
-            }
-        });
-        buildSprintButton.setBackgroundColor(0xFFCC2222);
     }
 
 

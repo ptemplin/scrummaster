@@ -21,20 +21,5 @@
         android:layout_width="wrap_content"
         android:text="View current sprint">
     </Button>
-    <Button android:id="@+id/buildSprintButton"
-        android:layout_height="40dp"
-        android:layout_width="wrap_content"
-        android:text="Build new sprint">
-    </Button>
-
-    <!-- Debugging and testing -->
-    <Button android:id="@+id/resetDatabaseButton"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:text="Reset database"
-        android:background="@color/button_material_dark"
-        android:onClick="resetDatabase">
-    </Button>
 
 </LinearLayout>

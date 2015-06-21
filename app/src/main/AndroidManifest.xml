@@ -40,10 +40,6 @@
             android:name=".activity.SprintActivity"
             android:label="@string/title_activity_sprint" >
         </activity>
-        <activity
-            android:name=".activity.BuildSprintActivity"
-            android:label="@string/title_activity_build_sprint" >
-        </activity>
     </application>
 
 </manifest>
