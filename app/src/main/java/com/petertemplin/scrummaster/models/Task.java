@@ -11,17 +11,17 @@ public class Task {
 
     private String description;
 
-    private int priority;
+    private int priority = 0;
 
     private String estimatedTime;
 
-    private int points;
+    private int points = 0;
 
     private String progress;
 
-    private int startedDate;
+    private int startedDate = 0;
 
-    private int completedDate;
+    private int completedDate = 0;
 
     public Task(int id, String name) {
         this.id = id;

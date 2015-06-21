@@ -57,10 +57,15 @@ public class DataUtils {
     /*
      * adds a new task to the task table
      */
-    public void addTask() {
+    public void addTask(Task task) {
         // for debugging
-        String ADD_TASK = "insert into " + TABLE_TASK + " values (null, 'test', " +
-                "null, null,null,null,null,null);";
+        String description = task.getDescription();
+        if (description == null) {
+            description = "";
+        }
+        int priority = task.getPriority();
+        String ADD_TASK = "insert into " + TABLE_TASK + " values (null, '" + task.getName() + "', " +
+                "'" + description + "', " + priority + ", null, null, null, null);";
         database.execSQL(ADD_TASK);
     }
 

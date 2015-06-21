@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
 import com.petertemplin.scrummaster.data.DataUtils;
@@ -21,7 +22,7 @@ public class ViewTaskActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
 
-        String taskTitle = savedInstanceState.getString(VIEWING_TASK_ID);
+        String taskTitle = getIntent().getStringExtra(VIEWING_TASK_ID);
         taskTitle = taskTitle.substring(0, taskTitle.indexOf("-"));
         int taskId = 0;
         try {
@@ -31,8 +32,62 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
         task = DataUtils.getInstance(this).findTaskById(taskId);
 
-        
+        // setup all of the fields of the activity
+        TextView titleText = (TextView) findViewById(R.id.viewTaskTitle);
+        titleText.setText(task.toString());
+
+        TextView descText = (TextView) findViewById(R.id.viewTaskDescription);
+        if (task.getDescription() == null) {
+            descText.setText("No description");
+        } else {
+            descText.setText(task.getDescription());
+        }
+
+        TextView priorityText = (TextView) findViewById(R.id.viewTaskPriority);
+        if (task.getPriority() == 0) {
+            priorityText.setText("");
+        } else {
+            priorityText.setText("Priority: " + task.getPriority());
+        }
+
+        TextView estimatedText = (TextView) findViewById(R.id.viewTaskEstimate);
+        if (task.getEstimatedTime() == null) {
+            estimatedText.setText("Estimated time: 0");
+        } else {
+            estimatedText.setText("Estimated time: " + task.getEstimatedTime());
+        }
+
+        TextView pointsText = (TextView) findViewById(R.id.viewTaskPoints);
+        if (task.getPoints() == 0) {
+            pointsText.setText("No points");
+        } else {
+            pointsText.setText(task.getPoints());
+        }
+
+        TextView progressText = (TextView) findViewById(R.id.viewTaskProgress);
+        if (task.getProgress() == null) {
+            progressText.setText("Not started");
+        } else {
+            progressText.setText(task.getProgress());
+        }
+
+        TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
+        if (task.getStartedDate() == 0) {
+            startedText.setText("");
+        } else {
+            startedText.setText(task.getStartedDate());
+        }
+
+        TextView completedText = (TextView) findViewById(R.id.viewTaskCompletedDate);
+        if (task.getCompletedDate() == 0) {
+            completedText.setText("");
+        } else {
+            completedText.setText(task.getCompletedDate());
+        }
+
     }
+
+
 
 
     @Override
