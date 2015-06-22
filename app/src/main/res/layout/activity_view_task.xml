@@ -8,30 +8,38 @@
     tools:context="com.petertemplin.scrummaster.activity.ViewTaskActivity">
 
     <TextView android:id="@+id/viewTaskTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
+        android:gravity="center_horizontal"
         android:textStyle="bold"/>
     <TextView android:id="@+id/viewTaskDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textSize="15sp"/>
     <TextView android:id="@+id/viewTaskPriority"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
     <TextView android:id="@+id/viewTaskEstimate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
     <TextView android:id="@+id/viewTaskPoints"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
     <TextView android:id="@+id/viewTaskProgress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
     <TextView android:id="@+id/viewTaskStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView android:id="@+id/viewTaskCompletedDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="15sp"/>
 
 </LinearLayout>

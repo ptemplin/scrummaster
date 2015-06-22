@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.petertemplin.scrummaster.R;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Task;
+import com.petertemplin.scrummaster.util.DateUtils;
 
 
 public class ViewTaskActivity extends ActionBarActivity {
@@ -66,14 +67,14 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
 
         TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
-        if (task.getStartedDate() == 0) {
+        if (task.getStartedDate() == null || task.getStartedDate() == DateUtils.EMPTY_DATE) {
             startedText.setText("");
         } else {
             startedText.setText(task.getStartedDate());
         }
 
         TextView completedText = (TextView) findViewById(R.id.viewTaskCompletedDate);
-        if (task.getCompletedDate() == 0) {
+        if (task.getCompletedDate() == null || task.getStartedDate() == DateUtils.EMPTY_DATE) {
             completedText.setText("");
         } else {
             completedText.setText(task.getCompletedDate());

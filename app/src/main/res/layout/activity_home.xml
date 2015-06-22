@@ -1,25 +1,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".HomeActivity">
+    tools:context=".HomeActivity">
 
     <Button android:id="@+id/addToBacklogButton"
         android:layout_height="40dp"
-        android:layout_width="wrap_content"
-        android:text="Add task to backlog">
+        android:layout_width="match_parent"
+        android:text="Add task to backlog"
+        android:textAlignment="center">
     </Button>
     <Button android:id="@+id/viewBacklogButton"
         android:layout_height="40dp"
-        android:layout_width="wrap_content"
-        android:text="View backlog">
+        android:layout_width="match_parent"
+        android:text="View backlog"
+        android:textAlignment="center">
     </Button>
     <Button android:id="@+id/currentSprintButton"
         android:layout_height="40dp"
-        android:layout_width="wrap_content"
-        android:text="View current sprint">
+        android:layout_width="match_parent"
+        android:text="View current sprint"
+        android:textAlignment="center">
+    </Button>
+    <Button android:id="@+id/resetButton"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:text="Reset database"
+        android:textAlignment="center"
+        android:background="#ffff0000"
+        android:onClick="resetDatabase">
     </Button>
 
 </LinearLayout>

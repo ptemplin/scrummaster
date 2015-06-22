@@ -1,5 +1,9 @@
 package com.petertemplin.scrummaster.models;
 
+import android.content.Context;
+
+import com.petertemplin.scrummaster.data.DataUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +18,13 @@ public class Sprint extends AbstractTaskList{
 
     private String description;
 
-    private int startDate;
+    private String startDate;
 
-    private int endDate;
+    private String endDate;
 
     private String duration;
 
-    private boolean started;
+    private Boolean started;
 
     private int projectId;
 
@@ -44,19 +48,19 @@ public class Sprint extends AbstractTaskList{
         this.description = description;
     }
 
-    public int getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(int startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public int getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(int endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -68,7 +72,7 @@ public class Sprint extends AbstractTaskList{
         this.duration = duration;
     }
 
-    public boolean isStarted() {
+    public Boolean isStarted() {
         return started;
     }
 
@@ -82,5 +86,13 @@ public class Sprint extends AbstractTaskList{
 
     public void setProject(int project) {
         this.projectId = project;
+    }
+
+    public void save(Context parent) {
+        DataUtils.getInstance(parent).saveSprint(this);
+    }
+
+    public String getTimeRemaining() {
+        return "5 days remaining";
     }
 }

@@ -22,8 +22,8 @@ public class DataOpenHelper extends SQLiteOpenHelper {
             + DataUtils.COLUMN_ESTIMATED_TIME + " text, "
             + DataUtils.COLUMN_POINTS + " integer, "
             + DataUtils.COLUMN_PROGRESS + " text, "
-            + DataUtils.COLUMN_START_DATE + " integer, "
-            + DataUtils.COLUMN_END_DATE + " integer, "
+            + DataUtils.COLUMN_START_DATE + " text, "
+            + DataUtils.COLUMN_END_DATE + " text, "
             + DataUtils.COLUMN_SPRINT + " integer, "
             + DataUtils.COLUMN_PROJECT + " integer, "
             + DataUtils.COLUMN_BACKLOG + " integer);";
@@ -33,8 +33,8 @@ public class DataOpenHelper extends SQLiteOpenHelper {
             + DataUtils.COLUMN_SPRINT_ID + " integer primary key, "
             + DataUtils.COLUMN_SPRINT_NAME + " text not null, "
             + DataUtils.COLUMN_SPRINT_DESCRIPTION + " text, "
-            + DataUtils.COLUMN_SPRINT_START_DATE + " integer, "
-            + DataUtils.COLUMN_SPRINT_END_DATE + " integer, "
+            + DataUtils.COLUMN_SPRINT_START_DATE + " text, "
+            + DataUtils.COLUMN_SPRINT_END_DATE + " text, "
             + DataUtils.COLUMN_SPRINT_DURATION + " text, "
             + DataUtils.COLUMN_SPRINT_STARTED + " text, "
             + DataUtils.COLUMN_SPRINT_PROJECT + " integer);";
@@ -51,7 +51,7 @@ public class DataOpenHelper extends SQLiteOpenHelper {
             + DataUtils.COLUMN_PROJECT_ID + " integer primary key, "
             + DataUtils.COLUMN_PROJECT_NAME + " text not null, "
             + DataUtils.COLUMN_PROJECT_DESCRIPTION + " text, "
-            + DataUtils.COLUMN_PROJECT_START_DATE + " integer);";
+            + DataUtils.COLUMN_PROJECT_START_DATE + " text);";
 
     private static final String[] createStmts = {TASK_TABLE_CREATE,
                                                  SPRINT_TABLE_CREATE,

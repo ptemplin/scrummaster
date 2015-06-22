@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.petertemplin.scrummaster.activity.ViewBacklogActivity">
     <item android:id="@+id/createNewSprintAction"
-        android:title="New Sprint" app:showAsAction="never"/>
+        android:title="New Sprint" app:showAsAction="always"/>
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

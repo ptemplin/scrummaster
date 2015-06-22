@@ -4,6 +4,64 @@
     android:orientation="vertical"
     tools:context="com.petertemplin.scrummaster.activity.SprintActivity">
 
+    <TextView android:id="@+id/sprint_title"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal">
+
+    </TextView>
+    <TextView android:id="@+id/sprint_description"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="15sp"
+        android:gravity="center_horizontal">
+
+    </TextView>
+    <TextView android:id="@+id/sprint_duration"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal">
+
+    </TextView>
+    <TextView android:id="@+id/sprint_time_remaining"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal">
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/sprintStartButton"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:text="Start"
+            android:background="#ff1e8d20">
+
+            </Button>
+        <Button android:id="@+id/sprintButtonEnd"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:text="End"
+            android:background="#ff8d281b">
+
+            </Button>
+    </LinearLayout>
+
     <ListView android:id="@+id/sprintTaskList"
         android:layout_width="match_parent"
         android:layout_height="0dp"

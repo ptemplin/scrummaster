@@ -21,9 +21,9 @@ public class Task {
 
     private String progress;
 
-    private int startedDate = 0;
+    private String startedDate;
 
-    private int completedDate = 0;
+    private String completedDate;
 
     private int sprintId = 0;
 
@@ -112,19 +112,19 @@ public class Task {
         this.progress = progress;
     }
 
-    public int getStartedDate() {
+    public String getStartedDate() {
         return startedDate;
     }
 
-    public void setStartedDate(int startedDate) {
+    public void setStartedDate(String startedDate) {
         this.startedDate = startedDate;
     }
 
-    public int getCompletedDate() {
+    public String getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(int completedDate) {
+    public void setCompletedDate(String completedDate) {
         this.completedDate = completedDate;
     }
 

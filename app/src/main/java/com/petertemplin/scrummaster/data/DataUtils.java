@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.petertemplin.scrummaster.models.Sprint;
 import com.petertemplin.scrummaster.models.Task;
+import com.petertemplin.scrummaster.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,11 +215,11 @@ public class DataUtils {
             } catch (Exception e) {
             }
             try {
-                task.setStartedDate(cursor.getInt(7));
+                task.setStartedDate(cursor.getString(7));
             } catch (Exception e) {
             }
             try {
-                task.setCompletedDate(cursor.getInt(8));
+                task.setCompletedDate(cursor.getString(8));
             } catch (Exception e) {
             }
             try {
@@ -255,10 +256,10 @@ public class DataUtils {
             sprint.setDescription(cursor.getString(2));
         }catch (Exception e) {}
         try {
-            sprint.setStartDate(cursor.getInt(3));
+            sprint.setStartDate(cursor.getString(3));
         } catch (Exception e) {}
         try {
-            sprint.setEndDate(cursor.getInt(4));
+            sprint.setEndDate(cursor.getString(4));
         } catch (Exception e) {}
         try {
             sprint.setDuration(cursor.getString(5));
@@ -272,5 +273,44 @@ public class DataUtils {
 
         cursor.close();
         return sprint;
+    }
+
+    public void saveSprint(Sprint sprint) {
+        // validate all fields
+        String name = sprint.getName();
+        if (name == null) {
+            name = "New Sprint";
+        }
+        String description = sprint.getDescription();
+        if (description == null) {
+            description = "No description";
+        }
+        String startDate = sprint.getStartDate();
+        if (startDate == null) {
+            startDate = DateUtils.EMPTY_DATE;
+        }
+        String endDate = sprint.getEndDate();
+        if (endDate == null) {
+            endDate = DateUtils.EMPTY_DATE;
+        }
+        String duration = sprint.getDuration();
+        if (duration == null) {
+            duration = "No time limit";
+        }
+        Boolean started = sprint.isStarted();
+        if (started == null) {
+            started = false;
+        }
+
+        String UPDATE_SPRINT = "update " + TABLE_SPRINT + " set "
+                + COLUMN_SPRINT_NAME + "='" + name + "', "
+                + COLUMN_SPRINT_DESCRIPTION + "='" + description + "', "
+                + COLUMN_SPRINT_START_DATE + "=" + startDate + ", "
+                + COLUMN_SPRINT_END_DATE + "=" + endDate + ", "
+                + COLUMN_SPRINT_DURATION + "='" + duration + "', "
+                + COLUMN_SPRINT_STARTED + "='" + started + "', "
+                + COLUMN_SPRINT_PROJECT + "=" + sprint.getProject()
+                + " where " + COLUMN_SPRINT_ID + "=" + sprint.getId() + ";";
+        database.execSQL(UPDATE_SPRINT);
     }
 }
