@@ -10,12 +10,18 @@
     <EditText android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title"></EditText>
+        android:hint="Title"
+        android:inputType="textCapWords">
+
+        </EditText>
 
     <EditText android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:hint="Description"></EditText>
+        android:hint="Description"
+        android:inputType="textCapSentences">
+
+        </EditText>
 
     <LinearLayout
         android:layout_width="match_parent"

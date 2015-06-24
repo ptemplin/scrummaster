@@ -100,11 +100,11 @@ public class SprintActivity extends ActionBarActivity {
             });
         }
         if (currentSprint.isStarted() == null || !currentSprint.isStarted()) {
-            startButton.setVisibility(View.GONE);
-            endButton.setVisibility(View.VISIBLE);
-        } else {
             startButton.setVisibility(View.VISIBLE);
             endButton.setVisibility(View.GONE);
+        } else {
+            startButton.setVisibility(View.GONE);
+            endButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -112,6 +112,7 @@ public class SprintActivity extends ActionBarActivity {
         currentSprint.setStarted(true);
         currentSprint.setStartDate(DateUtils.currentDateToString());
         currentSprint.save(this);
+        updateButtons();
     }
 
     public void endSprint() {
@@ -136,7 +137,7 @@ public class SprintActivity extends ActionBarActivity {
         }
 
         TextView durationView = (TextView) findViewById(R.id.sprint_duration);
-        String duration = currentSprint.getDuration();
+        String duration = currentSprint.getDurationFormatted();
         if (duration == null) {
             duration = "No time limit";
         }

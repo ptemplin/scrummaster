@@ -92,7 +92,7 @@ public class DataUtils {
         // for debugging
         String description = task.getDescription();
         if (description == null) {
-            description = "";
+            description = "No description";
         }
         int priority = task.getPriority();
         String ADD_TASK = "insert into " + TABLE_TASK + " values (null, '" + task.getName() + "', " +
@@ -102,12 +102,39 @@ public class DataUtils {
 
     public void addNewSprint(Sprint sprint) {
         // first add the sprint to the database
+        // validate all fields
         String name = sprint.getName();
         if (name == null) {
-            name = "Sprint";
+            name = "New Sprint";
+        }
+        String description = sprint.getDescription();
+        if (description == null) {
+            description = "No description";
+        }
+        String startDate = sprint.getStartDate();
+        if (startDate == null) {
+            startDate = DateUtils.EMPTY_DATE;
+        }
+        String endDate = sprint.getEndDate();
+        if (endDate == null) {
+            endDate = DateUtils.EMPTY_DATE;
+        }
+        String duration = sprint.getDuration();
+        if (duration == null) {
+            duration = "No time limit";
+        }
+        Boolean started = sprint.isStarted();
+        if (started == null) {
+            started = false;
         }
         String ADD_SPRINT = "insert into " + TABLE_SPRINT + " values (null, '"
-                + name + "', null, null, null, null, null, null);";
+                + name + "', '"
+                + description + "', '"
+                + startDate + "', '"
+                + endDate + "', '"
+                + duration + "', '"
+                + started + "', "
+                + sprint.getProject() + ");";
         database.execSQL(ADD_SPRINT);
 
         // if there are no tasks in the sprint, return
@@ -273,6 +300,49 @@ public class DataUtils {
 
         cursor.close();
         return sprint;
+    }
+
+    public void saveTask(Task task) {
+        // validate all fields
+        String name = task.getName();
+        if (name == null) {
+            name = "New Task";
+        }
+        String description = task.getDescription();
+        if (description == null) {
+            description = "No description";
+        }
+        String estimatedTime = task.getEstimatedTime();
+        if (estimatedTime == null) {
+            estimatedTime = "No estimate given";
+        }
+        String progress = task.getProgress();
+        if (progress == null) {
+            progress = "Back Burner";
+        }
+        String startDate = task.getStartedDate();
+        if (startDate == null) {
+            startDate = DateUtils.EMPTY_DATE;
+        }
+        String endDate = task.getCompletedDate();
+        if (endDate == null) {
+            endDate = DateUtils.EMPTY_DATE;
+        }
+
+        String UPDATE_TASK = "update " + TABLE_TASK + " set "
+                + COLUMN_NAME + "='" + name + "', "
+                + COLUMN_DESCRIPTION + "='" + description + "', "
+                + COLUMN_PRIORITY + "=" + task.getPriority() + ", "
+                + COLUMN_ESTIMATED_TIME + "='" + estimatedTime + "', "
+                + COLUMN_POINTS + "=" + task.getPoints() + ", "
+                + COLUMN_PROGRESS + "='" + progress + "', "
+                + COLUMN_START_DATE + "='" + startDate + "', "
+                + COLUMN_END_DATE + "='" + endDate + "', "
+                + COLUMN_SPRINT + "=" + task.getSprintId() + ", "
+                + COLUMN_PROJECT + "=" + task.getProjectId() + ", "
+                + COLUMN_BACKLOG + "=" + task.getBacklogId()
+                + " where " + COLUMN_ID + "=" + task.getId() + ";";
+        database.execSQL(UPDATE_TASK);
     }
 
     public void saveSprint(Sprint sprint) {

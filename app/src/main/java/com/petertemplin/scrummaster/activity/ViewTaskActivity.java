@@ -4,6 +4,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
@@ -59,12 +63,28 @@ public class ViewTaskActivity extends ActionBarActivity {
             pointsText.setText(task.getPoints());
         }
 
-        TextView progressText = (TextView) findViewById(R.id.viewTaskProgress);
-        if (task.getProgress() == null) {
-            progressText.setText("Not started");
-        } else {
-            progressText.setText(task.getProgress());
-        }
+        Spinner progress = (Spinner) findViewById(R.id.viewTaskProgress);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.task_progress_values, R.layout.spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        progress.setAdapter(adapter);
+        progress.setSelection(getPositionOfProgressByName());
+        progress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = (String) parent.getItemAtPosition(position);
+                task.setProgress(choice);
+                saveTask();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
 
         TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
         if (task.getStartedDate() == null || task.getStartedDate() == DateUtils.EMPTY_DATE) {
@@ -81,9 +101,6 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
 
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,5 +122,26 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getPositionOfProgressByName() {
+        String progress = task.getProgress();
+        if (progress == null || progress.equals("Back Burner")) {
+            return 0;
+        } else if (progress.equals("Not Started")){
+            return 1;
+        } else if (progress.equals("Started")) {
+            return 2;
+        } else if (progress.equals("Testing")) {
+            return 3;
+        } else if (progress.equals("Complete")) {
+            return 4;
+        } else {
+            return 0;
+        }
+    }
+
+    public void saveTask() {
+        task.save(this);
     }
 }

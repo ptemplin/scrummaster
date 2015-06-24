@@ -1,5 +1,7 @@
 package com.petertemplin.scrummaster.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -104,6 +107,39 @@ public class ViewBacklogActivity extends ActionBarActivity {
     public void onStartBuildingSprint() {
         buildSprintActionMode = true;
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(getLayoutInflater().inflate(R.layout.create_sprint_dialog, null))
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String title = ((EditText) (((AlertDialog) dialog).findViewById(R.id.createSprintTitle)))
+                                .getText().toString();
+                        String desc = ((EditText) (((AlertDialog) dialog).findViewById(R.id.createSprintDescription)))
+                                .getText().toString();
+                        String weeks = ((EditText) (((AlertDialog) dialog).findViewById(R.id.createSprintDurationWeeks)))
+                                .getText().toString();
+                        String days = ((EditText) (((AlertDialog) dialog).findViewById(R.id.createSprintDurationDays)))
+                                .getText().toString();
+                        String hours = ((EditText) (((AlertDialog) dialog).findViewById(R.id.createSprintDurationHours)))
+                                .getText().toString();
+                        if (validateSprintCreation(title, desc, weeks, days, hours)) {
+                            sprint = new Sprint();
+                            sprint.setName(title);
+                            sprint.setDescription(desc);
+                            sprint.setDuration(weeks + " " + days + " " + hours);
+                        }
+                        dialog.dismiss();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onSprintClosed();
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
         // make the views visible
         sprintTaskList = (ListView) findViewById(R.id.sprintTaskList);
         sprintTaskList.setVisibility(View.VISIBLE);
@@ -116,7 +152,6 @@ public class ViewBacklogActivity extends ActionBarActivity {
             }
         });
 
-        // for testing, use all backlog tasks
         ArrayAdapter<Task> adapter = new ArrayAdapter<>(this, R.layout.sprint_task_list_item, sprint.toArray());
         sprintTaskList.setAdapter(adapter);
         sprintTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,27 +185,8 @@ public class ViewBacklogActivity extends ActionBarActivity {
     }
 
     public void onFinishBuildingSprint() {
-        buildSprintActionMode = false;
-
-        // hide the listview and save button
-        if (sprintTaskList != null) {
-            sprintTaskList.setVisibility(View.GONE);
-        }
-        if (saveSprintButton != null) {
-            saveSprintButton.setVisibility(View.GONE);
-        }
-
         saveSprint();
-
-        sprint = new Sprint();
-
-        // reset the backlog's onClickListener
-        backlogTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startTaskDetails(view);
-            }
-        });
+        onSprintClosed();
     }
 
     public void onSprintItemAdded(String title) {
@@ -187,6 +203,33 @@ public class ViewBacklogActivity extends ActionBarActivity {
         sprint.removeTask(task);
         backlog.addTask(task);
         updateListViews();
+    }
+
+    public void onSprintClosed() {
+        buildSprintActionMode = false;
+
+        // hide the listview and save button
+        if (sprintTaskList != null) {
+            sprintTaskList.setVisibility(View.GONE);
+        }
+        if (saveSprintButton != null) {
+            saveSprintButton.setVisibility(View.GONE);
+        }
+
+        sprint = new Sprint();
+
+        // reset the backlog's onClickListener
+        backlogTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startTaskDetails(view);
+            }
+        });
+    }
+
+    public static boolean validateSprintCreation(String title, String desc, String months,
+                                       String weeks, String days) {
+        return true;
     }
 
     public void updateListViews() {

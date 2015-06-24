@@ -68,6 +68,14 @@ public class Sprint extends AbstractTaskList{
         return duration;
     }
 
+    public String getDurationFormatted() {
+        if (duration != null) {
+            String[] nums = duration.split(" ");
+            return nums[0] + " months " + nums[1] + " days " + nums[2] + " hours";
+        }
+        return "No time limit";
+    }
+
     public void setDuration(String duration) {
         this.duration = duration;
     }
@@ -93,6 +101,12 @@ public class Sprint extends AbstractTaskList{
     }
 
     public String getTimeRemaining() {
-        return "5 days remaining";
+        if (duration != null && startDate != null) {
+            //String[] nums = duration.split(" ");
+            //int monthsTotal = Integer.parseInt(nums[0]);
+            //int daysTotal = Integer.parseInt(nums[1]);
+            //int hoursTotal = Integer.parseInt(nums[2]);
+        }
+        return "Not started";
     }
 }

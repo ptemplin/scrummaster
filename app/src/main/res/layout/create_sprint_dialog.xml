@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText android:id="@+id/createSprintTitle"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Title"
+        android:textColorHint="#999999"
+        android:textColor="#444444"
+        android:gravity="center_horizontal"
+        android:inputType="textCapWords">
+
+    </EditText>
+    <EditText android:id="@+id/createSprintDescription"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:hint="Description"
+        android:textColorHint="#999999"
+        android:textColor="#444444"
+        android:gravity="center_horizontal"
+        android:inputType="textCapSentences">
+
+    </EditText>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#444444"
+            android:text="Months">
+
+        </TextView>
+        <EditText android:id="@+id/createSprintDurationWeeks"
+            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:textColor="#444444"
+            android:textColorHint="#999999"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:inputType="number">
+
+        </EditText>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#444444"
+            android:text="Weeks">
+
+        </TextView>
+        <EditText
+            android:id="@+id/createSprintDurationDays"
+            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:textColor="#444444"
+            android:textColorHint="#999999"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:inputType="number">
+
+        </EditText>
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textColor="#444444"
+            android:text="Days">
+
+        </TextView>
+        <EditText
+            android:id="@+id/createSprintDurationHours"
+            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:textColor="#444444"
+            android:textColorHint="#999999"
+            android:gravity="center_horizontal"
+            android:text="0"
+            android:inputType="number">
+
+        </EditText>
+    </LinearLayout>
+
+
+
+</LinearLayout>

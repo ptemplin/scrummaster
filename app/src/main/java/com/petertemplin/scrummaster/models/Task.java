@@ -1,5 +1,7 @@
 package com.petertemplin.scrummaster.models;
 
+import android.content.Context;
+
 import com.petertemplin.scrummaster.data.DataUtils;
 
 /**
@@ -144,5 +146,9 @@ public class Task {
             return name;
         }
         return id + "-" + name;
+    }
+
+    public void save(Context context) {
+        DataUtils.getInstance(context).saveTask(this);
     }
 }

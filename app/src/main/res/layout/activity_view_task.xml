@@ -30,10 +30,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"/>
-    <TextView android:id="@+id/viewTaskProgress"
+    <Spinner
+        android:id="@+id/viewTaskProgress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"/>
+        android:layout_height="wrap_content">
+
+    </Spinner>
     <TextView android:id="@+id/viewTaskStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
