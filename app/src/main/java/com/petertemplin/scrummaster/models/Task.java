@@ -3,11 +3,27 @@ package com.petertemplin.scrummaster.models;
 import android.content.Context;
 
 import com.petertemplin.scrummaster.data.DataUtils;
+import com.petertemplin.scrummaster.util.DateUtils;
 
 /**
  * Created by Me on 2015-06-20.
  */
 public class Task {
+
+    // defaults
+    public static int DEFAULT_ID = 0;
+    public static String DEFAULT_NAME = "Task";
+    public static String DEFAULT_DESCRIPTION = "No description";
+    public static int DEFAULT_PRIORITY = 0;
+    public static int MAX_PRIORITY = 5;
+    public static int MIN_PRIORITY = 0;
+    public static String DEFAULT_ESTIMATE = "None";
+    public static int DEFAULT_POINTS = 0;
+    public static int MAX_POINTS = 21;
+    public static int POINTS_INTERVALS = 7;
+    public static String DEFAULT_PROGRESS = "Back Burner";
+    public static String DEFAULT_START = DateUtils.EMPTY_DATE;
+    public static String DEFAULT_END = DateUtils.EMPTY_DATE;
 
     private int id = 0;
 
@@ -128,6 +144,14 @@ public class Task {
 
     public void setCompletedDate(String completedDate) {
         this.completedDate = completedDate;
+    }
+
+    public void start() {
+        startedDate = DateUtils.currentDateToString();
+    }
+
+    public void end() {
+        completedDate = DateUtils.currentDateToString();
     }
 
     public static int getIdFromTitle(String title) {

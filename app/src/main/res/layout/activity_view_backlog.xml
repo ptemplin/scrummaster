@@ -4,15 +4,40 @@
     android:orientation="vertical"
     tools:context="com.petertemplin.scrummaster.activity.ViewBacklogActivity">
 
-    <Button android:id="@+id/buildSprintSaveButton"
-        android:layout_height="50dp"
-        android:layout_width="wrap_content"
+    <LinearLayout android:id="@+id/sprintButtons"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
         android:padding="10dp"
-        android:layout_gravity="center_horizontal"
-        android:text="Save Sprint"
-        android:visibility="gone"
-        android:background="#ffadff95">
-    </Button>
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <Button android:id="@+id/buildSprintStoreButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Store"
+            android:background="#ffaaaaaa">
+        </Button>
+        <Button android:id="@+id/buildSprintStartButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Start"
+            android:background="#ffadff95">
+        </Button>
+        <Button android:id="@+id/buildSprintCancelButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Cancel"
+            android:background="#ffcc3333">
+        </Button>
+    </LinearLayout>
 
     <ListView android:id="@+id/sprintTaskList"
         android:layout_width="match_parent"

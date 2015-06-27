@@ -43,6 +43,23 @@ public class HomeActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });
+        Button buildSprintButton = (Button) findViewById(R.id.buildSprintButton);
+        buildSprintButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, ViewBacklogActivity.class);
+                intent.putExtra(ViewBacklogActivity.BUILDING_SPRINT, true);
+                startActivity(intent);
+            }
+        });
+        Button completedTasksButton = (Button) findViewById(R.id.completedTasksButton);
+        completedTasksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, CompletedTasksActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -63,12 +80,14 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_reset_database) {
+            resetDatabase();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public void resetDatabase(View view) {
+    public void resetDatabase() {
         DataUtils.getInstance(this).resetDatabase(this);
     }
 }

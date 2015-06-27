@@ -89,14 +89,19 @@ public class DataUtils {
      * adds a new task to the task table
      */
     public void addTask(Task task) {
-        // for debugging
         String description = task.getDescription();
         if (description == null) {
-            description = "No description";
+            description = Task.DEFAULT_DESCRIPTION;
         }
         int priority = task.getPriority();
+        String estimate = task.getEstimatedTime();
+        if (estimate == null) {
+            estimate = Task.DEFAULT_ESTIMATE;
+        }
+        int points = task.getPoints();
         String ADD_TASK = "insert into " + TABLE_TASK + " values (null, '" + task.getName() + "', " +
-                "'" + description + "', " + priority + ", null, null, null, null, null, null, null, null);";
+                "'" + description + "', " + priority + ", '" + estimate + "', " + points + ", null, " +
+                "null, null, null, null, null);";
         database.execSQL(ADD_TASK);
     }
 
@@ -105,23 +110,23 @@ public class DataUtils {
         // validate all fields
         String name = sprint.getName();
         if (name == null) {
-            name = "New Sprint";
+            name = Sprint.DEFAULT_NAME;
         }
         String description = sprint.getDescription();
         if (description == null) {
-            description = "No description";
+            description = Sprint.DEFAULT_DESC;
         }
         String startDate = sprint.getStartDate();
         if (startDate == null) {
-            startDate = DateUtils.EMPTY_DATE;
+            startDate = Sprint.DEFAULT_START;
         }
         String endDate = sprint.getEndDate();
         if (endDate == null) {
-            endDate = DateUtils.EMPTY_DATE;
+            endDate = Sprint.DEFAULT_END;
         }
         String duration = sprint.getDuration();
         if (duration == null) {
-            duration = "No time limit";
+            duration = Sprint.DEFAULT_DURATION;
         }
         Boolean started = sprint.isStarted();
         if (started == null) {
@@ -176,8 +181,17 @@ public class DataUtils {
 
     public List<Task> getTasksFromBacklog() {
         // Get a cursor on the header table "categories"
+        final String getTasksQuery = "select * from " + TABLE_TASK + " where (" +
+                COLUMN_SPRINT + "=0 or " + COLUMN_SPRINT + " is null) AND (" +
+                COLUMN_PROGRESS + "='Back Burner' or " + COLUMN_PROGRESS + "='Not Started' or " +
+                COLUMN_PROGRESS + " is null);";
+        Cursor cursor = database.rawQuery(getTasksQuery, null);
+        return getTasksFromCursor(cursor);
+    }
+
+    public List<Task> getCompletedTasks() {
         final String getTasksQuery = "select * from " + TABLE_TASK + " where " +
-                COLUMN_SPRINT + "=0 or " + COLUMN_SPRINT + " is null;";
+                COLUMN_PROGRESS + "='Complete';";
         Cursor cursor = database.rawQuery(getTasksQuery, null);
         return getTasksFromCursor(cursor);
     }
@@ -306,27 +320,27 @@ public class DataUtils {
         // validate all fields
         String name = task.getName();
         if (name == null) {
-            name = "New Task";
+            name = Task.DEFAULT_NAME;
         }
         String description = task.getDescription();
         if (description == null) {
-            description = "No description";
+            description = Task.DEFAULT_DESCRIPTION;
         }
         String estimatedTime = task.getEstimatedTime();
         if (estimatedTime == null) {
-            estimatedTime = "No estimate given";
+            estimatedTime = Task.DEFAULT_ESTIMATE;
         }
         String progress = task.getProgress();
         if (progress == null) {
-            progress = "Back Burner";
+            progress = Task.DEFAULT_PROGRESS;
         }
         String startDate = task.getStartedDate();
         if (startDate == null) {
-            startDate = DateUtils.EMPTY_DATE;
+            startDate = Task.DEFAULT_START;
         }
         String endDate = task.getCompletedDate();
         if (endDate == null) {
-            endDate = DateUtils.EMPTY_DATE;
+            endDate = Task.DEFAULT_END;
         }
 
         String UPDATE_TASK = "update " + TABLE_TASK + " set "
@@ -349,23 +363,23 @@ public class DataUtils {
         // validate all fields
         String name = sprint.getName();
         if (name == null) {
-            name = "New Sprint";
+            name = Sprint.DEFAULT_NAME;
         }
         String description = sprint.getDescription();
         if (description == null) {
-            description = "No description";
+            description = Sprint.DEFAULT_DESC;
         }
         String startDate = sprint.getStartDate();
         if (startDate == null) {
-            startDate = DateUtils.EMPTY_DATE;
+            startDate = Sprint.DEFAULT_START;
         }
         String endDate = sprint.getEndDate();
         if (endDate == null) {
-            endDate = DateUtils.EMPTY_DATE;
+            endDate = Sprint.DEFAULT_END;
         }
         String duration = sprint.getDuration();
         if (duration == null) {
-            duration = "No time limit";
+            duration = Sprint.DEFAULT_DURATION;
         }
         Boolean started = sprint.isStarted();
         if (started == null) {

@@ -3,24 +3,41 @@ package com.petertemplin.scrummaster.activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.petertemplin.scrummaster.R;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Task;
+import com.petertemplin.scrummaster.util.StringUtils;
+
+import java.text.NumberFormat;
 
 
 public class AddToBacklogActivity extends ActionBarActivity {
+
+    String name;
+    String description;
+    Integer priority;
+    String estimate;
+    Integer points;
+
+    SeekBar pointsBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_to_back_log);
+
+        pointsBar = (SeekBar) findViewById(R.id.taskPointsSeekbar);
+        pointsBar.setMax(Task.POINTS_INTERVALS);
+        pointsBar.setProgress(Task.DEFAULT_POINTS);
 
         Button submitButton = (Button) findViewById(R.id.addToBacklogSubmit);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +73,65 @@ public class AddToBacklogActivity extends ActionBarActivity {
 
     private boolean validate() {
 
-        EditText editPriority = (EditText) findViewById(R.id.editPriority);
-        if (editPriority != null &&
-                (editPriority.getText() == null || editPriority.getText().toString().equals(""))) {
+        EditText editName = (EditText) findViewById(R.id.editName);
+        name = editName.getText().toString();
+        if (name == null || StringUtils.isEmpty(name)) {
+            Toast toast = Toast.makeText(this, "Task must be named", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, -100);
+            toast.show();
             return false;
         }
+
+        EditText editDesc = (EditText) findViewById(R.id.editDescription);
+        description = editDesc.getText().toString();
+        if (description == null || StringUtils.isEmpty(description)) {
+            description = Task.DEFAULT_DESCRIPTION;
+        }
+
+        EditText editPriority = (EditText) findViewById(R.id.editPriority);
+        String priorityS = editPriority.getText().toString();
+        if (priorityS == null || StringUtils.isEmpty(priorityS)) {
+            priority = Task.DEFAULT_PRIORITY;
+        } else {
+            try {
+                priority = Integer.parseInt(editPriority.getText().toString());
+            } catch (NumberFormatException e) {
+                priority = Task.DEFAULT_PRIORITY;
+            }
+            if (priority != Task.DEFAULT_PRIORITY) {
+                if (priority < Task.MIN_PRIORITY || priority > Task.MAX_PRIORITY) {
+                    Toast toast = Toast.makeText(this,
+                            "Priority must be between 0 and 5", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, -100);
+                    toast.show();
+                    return false;
+                }
+            }
+        }
+
+        EditText editEstimate = (EditText) findViewById(R.id.editEstimatedTime);
+        estimate = editEstimate.getText().toString();
+        if (editEstimate == null || StringUtils.isEmpty(estimate)) {
+            estimate = Task.DEFAULT_ESTIMATE;
+        }
+
+        points = pointsBar.getProgress();
+        switch(points) {
+            case 4:
+                points = 5;
+                break;
+            case 5:
+                points = 8;
+                break;
+            case 6:
+                points = 13;
+                break;
+            case 7:
+                points = 21;
+                break;
+        }
+
+
         return true;
     }
 
@@ -69,16 +140,12 @@ public class AddToBacklogActivity extends ActionBarActivity {
         if (!validated) {
             return;
         }
-        EditText editName = (EditText) findViewById(R.id.editName);
-        String name = editName.getText().toString();
-        EditText editDesc = (EditText) findViewById(R.id.editDescription);
-        String description = editDesc.getText().toString();
-        EditText editPriority = (EditText) findViewById(R.id.editPriority);
-        Integer priority = Integer.parseInt(editPriority.getText().toString());
 
         Task task = new Task(1, name);
         task.setDescription(description);
         task.setPriority(priority);
+        task.setEstimatedTime(estimate);
+        task.setPoints(points);
         DataUtils.getInstance(this).addTask(task);
 
         Intent intent = new Intent(this, ViewBacklogActivity.class);

@@ -3,8 +3,11 @@ package com.petertemplin.scrummaster.models;
 import android.content.Context;
 
 import com.petertemplin.scrummaster.data.DataUtils;
+import com.petertemplin.scrummaster.util.DateUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,7 +15,15 @@ import java.util.List;
  */
 public class Sprint extends AbstractTaskList{
 
-    private int id;
+    // defaults
+    public static int DEFAULT_ID = 0;
+    public static String DEFAULT_NAME = "New Sprint";
+    public static String DEFAULT_DESC = "No description";
+    public static String DEFAULT_START = DateUtils.EMPTY_DATE;
+    public static String DEFAULT_END = DateUtils.EMPTY_DATE;
+    public static String DEFAULT_DURATION = "No time limit";
+
+    private int id = 0;
 
     private String name;
 
@@ -71,9 +82,23 @@ public class Sprint extends AbstractTaskList{
     public String getDurationFormatted() {
         if (duration != null) {
             String[] nums = duration.split(" ");
-            return nums[0] + " months " + nums[1] + " days " + nums[2] + " hours";
+            String durationS = "";
+            if (!nums[0].equals("0")) {
+                durationS += nums[0] + " weeks ";
+            }
+            if (!nums[1].equals("0")) {
+                durationS += nums[1] + " days ";
+            }
+            if (!nums[2].equals("0")) {
+                durationS += nums[2] + " hours ";
+            }
+            if (!durationS.isEmpty()) {
+                return durationS;
+            } else {
+                return DEFAULT_DURATION;
+            }
         }
-        return "No time limit";
+        return DEFAULT_DURATION;
     }
 
     public void setDuration(String duration) {
@@ -96,17 +121,30 @@ public class Sprint extends AbstractTaskList{
         this.projectId = project;
     }
 
+    public void start() {
+        started = true;
+        startDate = DateUtils.currentDateToString();
+    }
+
+    public void end() {
+        endDate = DateUtils.currentDateToString();
+    }
+
     public void save(Context parent) {
         DataUtils.getInstance(parent).saveSprint(this);
     }
 
     public String getTimeRemaining() {
-        if (duration != null && startDate != null) {
-            //String[] nums = duration.split(" ");
-            //int monthsTotal = Integer.parseInt(nums[0]);
-            //int daysTotal = Integer.parseInt(nums[1]);
-            //int hoursTotal = Integer.parseInt(nums[2]);
+        if (duration != null && !duration.equals("0 0 0") && !duration.equals(DEFAULT_DURATION) &&
+                startDate != null && !startDate.equals(DateUtils.EMPTY_DATE)) {
+            long millisPassed = DateUtils.calculateTimeInPast(startDate);
+            long millisDuration = DateUtils.durationToMillis(duration);
+            long millisRemaining = millisDuration - millisPassed;
+            if (millisRemaining < 0) {
+                millisRemaining = 0;
+            }
+            return DateUtils.formatMillisAsTime(millisRemaining) + " remaining";
         }
-        return "Not started";
+        return "";
     }
 }

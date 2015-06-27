@@ -40,6 +40,10 @@
             android:name=".activity.SprintActivity"
             android:label="@string/title_activity_sprint" >
         </activity>
+        <activity
+            android:name=".activity.CompletedTasksActivity"
+            android:label="@string/title_activity_completed_tasks" >
+        </activity>
     </application>
 
 </manifest>

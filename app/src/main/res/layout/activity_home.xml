@@ -22,13 +22,19 @@
         android:text="View current sprint"
         android:textAlignment="center">
     </Button>
-    <Button android:id="@+id/resetButton"
+    <Button android:id="@+id/buildSprintButton"
         android:layout_height="40dp"
         android:layout_width="match_parent"
-        android:text="Reset database"
-        android:textAlignment="center"
-        android:background="#ffff0000"
-        android:onClick="resetDatabase">
+        android:text="Build sprint"
+        android:textAlignment="center">
     </Button>
+    <Button android:id="@+id/completedTasksButton"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:text="View completed tasks"
+        android:textAlignment="center">
+    </Button>
+
+
 
 </LinearLayout>

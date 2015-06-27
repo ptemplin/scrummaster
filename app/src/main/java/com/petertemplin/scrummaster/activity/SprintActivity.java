@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
+import com.petertemplin.scrummaster.adapter.SprintTaskListAdapter;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Sprint;
 import com.petertemplin.scrummaster.models.Task;
@@ -40,8 +41,8 @@ public class SprintActivity extends ActionBarActivity {
         // set the details
         setSprintDetails();
 
-        // for testing, use all backlog tasks
-        ArrayAdapter<Task> adapter = new ArrayAdapter<>(this, R.layout.sprint_task_list_item, currentSprint.toArray());
+        SprintTaskListAdapter adapter = new SprintTaskListAdapter(this,
+                R.layout.sprint_task_list_item, currentSprint.getTasks());
         sprintTaskList.setAdapter(adapter);
         sprintTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,6 +50,11 @@ public class SprintActivity extends ActionBarActivity {
                 startTaskDetails(view);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 
@@ -75,8 +81,9 @@ public class SprintActivity extends ActionBarActivity {
     }
 
     public void startTaskDetails(View view) {
+        TextView text = (TextView) view.findViewById(R.id.name);
         Intent intent = new Intent(this, ViewTaskActivity.class);
-        intent.putExtra(ViewTaskActivity.VIEWING_TASK_TITLE, ((TextView)view).getText().toString());
+        intent.putExtra(ViewTaskActivity.VIEWING_TASK_TITLE, text.getText().toString());
         startActivity(intent);
     }
 
@@ -109,14 +116,13 @@ public class SprintActivity extends ActionBarActivity {
     }
 
     public void startSprint() {
-        currentSprint.setStarted(true);
-        currentSprint.setStartDate(DateUtils.currentDateToString());
+        currentSprint.start();
         currentSprint.save(this);
         updateButtons();
     }
 
     public void endSprint() {
-        currentSprint.setEndDate(DateUtils.currentDateToString());
+        currentSprint.end();
         currentSprint.save(this);
     }
 
@@ -124,7 +130,7 @@ public class SprintActivity extends ActionBarActivity {
         TextView titleView = (TextView) findViewById(R.id.sprint_title);
         String title = currentSprint.getName();
         if (title == null) {
-            title = "New Sprint";
+            title = Sprint.DEFAULT_NAME;
         }
         titleView.setText(title);
 
@@ -139,7 +145,7 @@ public class SprintActivity extends ActionBarActivity {
         TextView durationView = (TextView) findViewById(R.id.sprint_duration);
         String duration = currentSprint.getDurationFormatted();
         if (duration == null) {
-            duration = "No time limit";
+            duration = Sprint.DEFAULT_DURATION;
         }
         durationView.setText(duration);
 

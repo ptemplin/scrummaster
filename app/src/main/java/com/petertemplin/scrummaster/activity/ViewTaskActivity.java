@@ -32,37 +32,7 @@ public class ViewTaskActivity extends ActionBarActivity {
         task = DataUtils.getInstance(this).findTaskById(taskId);
 
         // setup all of the fields of the activity
-        TextView titleText = (TextView) findViewById(R.id.viewTaskTitle);
-        titleText.setText(task.toString());
-
-        TextView descText = (TextView) findViewById(R.id.viewTaskDescription);
-        if (task.getDescription() == null) {
-            descText.setText("No description");
-        } else {
-            descText.setText(task.getDescription());
-        }
-
-        TextView priorityText = (TextView) findViewById(R.id.viewTaskPriority);
-        if (task.getPriority() == 0) {
-            priorityText.setText("");
-        } else {
-            priorityText.setText("Priority: " + task.getPriority());
-        }
-
-        TextView estimatedText = (TextView) findViewById(R.id.viewTaskEstimate);
-        if (task.getEstimatedTime() == null) {
-            estimatedText.setText("Estimated time: 0");
-        } else {
-            estimatedText.setText("Estimated time: " + task.getEstimatedTime());
-        }
-
-        TextView pointsText = (TextView) findViewById(R.id.viewTaskPoints);
-        if (task.getPoints() == 0) {
-            pointsText.setText("No points");
-        } else {
-            pointsText.setText(task.getPoints());
-        }
-
+        updateViews();
         Spinner progress = (Spinner) findViewById(R.id.viewTaskProgress);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -76,8 +46,7 @@ public class ViewTaskActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = (String) parent.getItemAtPosition(position);
-                task.setProgress(choice);
-                saveTask();
+                onProgressChanged(choice);
             }
 
             @Override
@@ -85,20 +54,6 @@ public class ViewTaskActivity extends ActionBarActivity {
                 // do nothing
             }
         });
-
-        TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
-        if (task.getStartedDate() == null || task.getStartedDate() == DateUtils.EMPTY_DATE) {
-            startedText.setText("");
-        } else {
-            startedText.setText(task.getStartedDate());
-        }
-
-        TextView completedText = (TextView) findViewById(R.id.viewTaskCompletedDate);
-        if (task.getCompletedDate() == null || task.getStartedDate() == DateUtils.EMPTY_DATE) {
-            completedText.setText("");
-        } else {
-            completedText.setText(task.getCompletedDate());
-        }
 
     }
 
@@ -124,6 +79,50 @@ public class ViewTaskActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void updateViews() {
+        // setup all of the fields of the activity
+        TextView titleText = (TextView) findViewById(R.id.viewTaskTitle);
+        titleText.setText(task.toString());
+
+        TextView descText = (TextView) findViewById(R.id.viewTaskDescription);
+        if (task.getDescription() == null) {
+            descText.setText(Task.DEFAULT_DESCRIPTION);
+        } else {
+            descText.setText(task.getDescription());
+        }
+
+        TextView priorityText = (TextView) findViewById(R.id.viewTaskPriority);
+        if (task.getPriority() == 0) {
+            priorityText.setText("");
+        } else {
+            priorityText.setText("Priority: " + task.getPriority());
+        }
+
+        TextView estimatedText = (TextView) findViewById(R.id.viewTaskEstimate);
+        if (task.getEstimatedTime() == null) {
+            estimatedText.setText(Task.DEFAULT_ESTIMATE);
+        } else {
+            estimatedText.setText("Estimated time: " + task.getEstimatedTime());
+        }
+
+        TextView pointsText = (TextView) findViewById(R.id.viewTaskPoints);
+        pointsText.setText(Task.DEFAULT_POINTS + " Points");
+
+        TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
+        if (task.getStartedDate() == null || task.getStartedDate().equals(DateUtils.EMPTY_DATE)) {
+            startedText.setText("");
+        } else {
+            startedText.setText("Started: " + DateUtils.formatDate(task.getStartedDate()));
+        }
+
+        TextView completedText = (TextView) findViewById(R.id.viewTaskCompletedDate);
+        if (task.getCompletedDate() == null || task.getCompletedDate().equals(DateUtils.EMPTY_DATE)) {
+            completedText.setText("");
+        } else {
+            completedText.setText("Completed: " + DateUtils.formatDate(task.getCompletedDate()));
+        }
+    }
+
     private int getPositionOfProgressByName() {
         String progress = task.getProgress();
         if (progress == null || progress.equals("Back Burner")) {
@@ -139,6 +138,25 @@ public class ViewTaskActivity extends ActionBarActivity {
         } else {
             return 0;
         }
+    }
+
+    public void onProgressChanged(String choice) {
+        task.setProgress(choice);
+        // if task is now started
+        if (choice.equals("Started")) {
+            task.start();
+        }
+        // if task is progressed straight to testing
+        else if (choice.equals("Testing") &&
+                task.getProgress().equals(DateUtils.EMPTY_DATE)) {
+            task.start();
+        }
+        // if task is now completed
+        else if (choice.equals("Complete")) {
+            task.end();
+        }
+        saveTask();
+        updateViews();
     }
 
     public void saveTask() {
