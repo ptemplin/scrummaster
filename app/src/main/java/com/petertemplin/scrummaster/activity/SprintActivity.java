@@ -1,7 +1,8 @@
 package com.petertemplin.scrummaster.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,11 @@ import com.petertemplin.scrummaster.models.Task;
 import com.petertemplin.scrummaster.util.DateUtils;
 
 
-public class SprintActivity extends ActionBarActivity {
+public class SprintActivity extends Activity {
+
+    public static final String SPRINT_ID = "sprintId";
+
+    Integer sprintId;
 
     Button startButton;
     Button endButton;
@@ -33,8 +38,10 @@ public class SprintActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sprint);
 
+        sprintId = getIntent().getIntExtra(SPRINT_ID, 0);
+
         sprintTaskList = (ListView) findViewById(R.id.sprintTaskList);
-        currentSprint = DataUtils.getInstance(this).getLatestSprint();
+        currentSprint = DataUtils.getInstance(this).getSprintById(sprintId);
 
         // set the buttons
         updateButtons();
@@ -127,12 +134,8 @@ public class SprintActivity extends ActionBarActivity {
     }
 
     public void setSprintDetails() {
-        TextView titleView = (TextView) findViewById(R.id.sprint_title);
-        String title = currentSprint.getName();
-        if (title == null) {
-            title = Sprint.DEFAULT_NAME;
-        }
-        titleView.setText(title);
+
+        setActionBarTitle();
 
         TextView descView = (TextView) findViewById(R.id.sprint_description);
         String description = currentSprint.getDescription();
@@ -142,15 +145,30 @@ public class SprintActivity extends ActionBarActivity {
             descView.setText(description);
         }
 
-        TextView durationView = (TextView) findViewById(R.id.sprint_duration);
-        String duration = currentSprint.getDurationFormatted();
-        if (duration == null) {
-            duration = Sprint.DEFAULT_DURATION;
-        }
-        durationView.setText(duration);
-
         TextView remainingView = (TextView) findViewById(R.id.sprint_time_remaining);
         String remaining = currentSprint.getTimeRemaining();
-        remainingView.setText(remaining);
+        String duration = currentSprint.getDurationFormatted();
+        String time;
+        if (duration.equals(Sprint.DEFAULT_DURATION)) {
+            time = Sprint.DEFAULT_DURATION;
+        } else if (remaining.equals(Sprint.DEFAULT_TIME_REMAINING)) {
+            time = Sprint.DEFAULT_TIME_REMAINING;
+        } else {
+            time = remaining;
+        }
+        remainingView.setText(time);
+    }
+
+    public void setActionBarTitle() {
+        ActionBar actionBar = SprintActivity.this.getActionBar();
+        if (actionBar == null) {
+            return;
+        }
+
+        if (currentSprint.getName() != null) {
+            actionBar.setTitle(currentSprint.getName());
+        } else {
+            actionBar.setTitle(R.string.title_activity_sprint);
+        }
     }
 }

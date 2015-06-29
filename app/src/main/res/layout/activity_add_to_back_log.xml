@@ -17,37 +17,77 @@
         android:inputType="textCapWords">
 
         </EditText>
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="@color/scrumGreen"
+        android:padding="5dip"
+        android:textSize="18sp"
+        android:text="Priority">
+        </TextView>
+    <SeekBar android:id="@+id/taskPrioritySeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip"
+            android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/priority_explosion_lowest">
+        </ImageView>
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/priority_explosion_low">
+        </ImageView>
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/priority_explosion_medium">
+        </ImageView>
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/priority_explosion_high">
+        </ImageView>
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:src="@drawable/priority_explosion_highest">
+        </ImageView>
+
+    </LinearLayout>
+
 
     <EditText android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:gravity="top"
         android:hint="Description"
         android:inputType="textCapSentences|textMultiLine"
         android:scrollHorizontally="false">
 
         </EditText>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Priority: ">
-        </TextView>
-        <EditText android:id="@+id/editPriority"
-            android:layout_height="wrap_content"
-            android:layout_width="50dp"
-            android:inputType="number"
-            android:hint="0">
-        </EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/scrumGreen"
+            android:padding="5dip"
             android:text="Estimated time: ">
         </TextView>
         <EditText android:id="@+id/editEstimatedTime"
@@ -59,7 +99,8 @@
 
     <TextView android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="15sp"
+        android:padding="5dip"
+        style="@style/GreenTextMedium"
         android:text="Points">
     </TextView>
     <SeekBar android:id="@+id/taskPointsSeekbar"
@@ -70,49 +111,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="0 ">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="1">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="2">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="3">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="5">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="8">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="13">
         </TextView>
-        <TextView android:layout_height="wrap_content"
+        <TextView style="@style/GreenTextSmall"
+            android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
@@ -120,15 +169,6 @@
         </TextView>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/addToBacklogSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Add To Backlog"/>
-
 
 </LinearLayout>
 </ScrollView>

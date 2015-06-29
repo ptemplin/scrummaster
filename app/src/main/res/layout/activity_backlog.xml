@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.petertemplin.scrummaster.activity.BacklogActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout android:id="@+id/sprintButtons"
+        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <Button android:id="@+id/buildSprintCancelButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_margin="10dip"
+            android:gravity="center"
+            android:text="Cancel"
+            android:background="#ffcc3333">
+        </Button>
+        <Button android:id="@+id/buildSprintStoreButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_margin="10dip"
+            android:gravity="center"
+            android:text="Store"
+            android:background="#ffaaaaaa">
+        </Button>
+        <Button android:id="@+id/buildSprintStartButton"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_margin="10dip"
+            android:gravity="center"
+            android:text="Start"
+            android:background="@color/scrumGreen">
+        </Button>
+    </LinearLayout>
+
+    <ListView android:id="@+id/sprintTaskList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone">
+    </ListView>
+    <View style="@style/Divider"></View>
+    <ListView android:id="@+id/backlogTaskList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+    </ListView>
+    </LinearLayout>
+        <Button android:id="@+id/addToBacklogButton"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="40dip"
+            android:layout_marginRight="40dip"
+            android:background="@drawable/ic_action_new"/>
+</RelativeLayout>

@@ -1,8 +1,50 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
         <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/defaultActionBar</item>
+        <item name="android:actionBarSize">60dip</item>
+        <item name="android:background">@color/pureWhite</item>
     </style>
+
+    <style name="defaultActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/pureWhite</item>
+        <item name="android:titleTextStyle">@style/actionBarTitleText</item>
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+
+    <style name="actionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/scrumGreen</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dip</item>
+        <item name="android:background">@color/scrumGreen</item>
+    </style>
+
+    <style name="ListItemDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">#dddddd</item>
+    </style>
+
+    <style name="GreenTextMedium">
+        <item name="android:textColor">@color/scrumGreen</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="GreenTextSmall">
+        <item name="android:textColor">@color/scrumGreen</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <color name="scrumGreen">#ff1e8d20</color>
+    <color name="pureWhite">#ffffffff</color>
+    <color name="calmYellow">#88fffb46</color>
+    <color name="orange">#aaff6c18</color>
+    <color name="lightGreen">#ff65bb4c</color>
+
 
 </resources>

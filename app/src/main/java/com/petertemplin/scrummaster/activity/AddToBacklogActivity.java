@@ -1,5 +1,6 @@
 package com.petertemplin.scrummaster.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import com.petertemplin.scrummaster.util.StringUtils;
 import java.text.NumberFormat;
 
 
-public class AddToBacklogActivity extends ActionBarActivity {
+public class AddToBacklogActivity extends Activity {
 
     String name;
     String description;
@@ -29,6 +30,7 @@ public class AddToBacklogActivity extends ActionBarActivity {
     Integer points;
 
     SeekBar pointsBar;
+    SeekBar priorityBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +41,9 @@ public class AddToBacklogActivity extends ActionBarActivity {
         pointsBar.setMax(Task.POINTS_INTERVALS);
         pointsBar.setProgress(Task.DEFAULT_POINTS);
 
-        Button submitButton = (Button) findViewById(R.id.addToBacklogSubmit);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submit();
-            }
-        });
+        priorityBar = (SeekBar) findViewById(R.id.taskPrioritySeekBar);
+        priorityBar.setMax(Task.MAX_PRIORITY - 1);
+        priorityBar.setProgress(Task.DEFAULT_PRIORITY);
     }
 
 
@@ -66,6 +64,8 @@ public class AddToBacklogActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_confirm) {
+            submit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -82,31 +82,12 @@ public class AddToBacklogActivity extends ActionBarActivity {
             return false;
         }
 
+        priority = priorityBar.getProgress();
+
         EditText editDesc = (EditText) findViewById(R.id.editDescription);
         description = editDesc.getText().toString();
         if (description == null || StringUtils.isEmpty(description)) {
             description = Task.DEFAULT_DESCRIPTION;
-        }
-
-        EditText editPriority = (EditText) findViewById(R.id.editPriority);
-        String priorityS = editPriority.getText().toString();
-        if (priorityS == null || StringUtils.isEmpty(priorityS)) {
-            priority = Task.DEFAULT_PRIORITY;
-        } else {
-            try {
-                priority = Integer.parseInt(editPriority.getText().toString());
-            } catch (NumberFormatException e) {
-                priority = Task.DEFAULT_PRIORITY;
-            }
-            if (priority != Task.DEFAULT_PRIORITY) {
-                if (priority < Task.MIN_PRIORITY || priority > Task.MAX_PRIORITY) {
-                    Toast toast = Toast.makeText(this,
-                            "Priority must be between 0 and 5", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, -100);
-                    toast.show();
-                    return false;
-                }
-            }
         }
 
         EditText editEstimate = (EditText) findViewById(R.id.editEstimatedTime);
@@ -148,7 +129,7 @@ public class AddToBacklogActivity extends ActionBarActivity {
         task.setPoints(points);
         DataUtils.getInstance(this).addTask(task);
 
-        Intent intent = new Intent(this, ViewBacklogActivity.class);
+        Intent intent = new Intent(this, BacklogActivity.class);
         startActivity(intent);
     }
 }

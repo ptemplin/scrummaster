@@ -1,6 +1,7 @@
 package com.petertemplin.scrummaster.activity;
 
-import android.support.v7.app.ActionBar;
+import android.app.Activity;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ViewBacklogActivity extends ActionBarActivity {
+public class BacklogActivity extends Activity {
 
     public static final String BUILDING_SPRINT = "buildingSprint";
 
@@ -38,6 +39,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
     Sprint sprint;
     Backlog backlog;
 
+    Button newTaskButton;
     Button storeSprintButton;
     Button startSprintButton;
     Button cancelSprintButton;
@@ -53,11 +55,21 @@ public class ViewBacklogActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_backlog);
+        setContentView(R.layout.activity_backlog);
 
         // setup models
         backlog = new Backlog();
         sprint = new Sprint();
+
+        //handle the new item button
+        newTaskButton = (Button) findViewById(R.id.addToBacklogButton);
+        newTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BacklogActivity.this, AddToBacklogActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Setup the list of tasks
         backlogTaskList = (ListView) findViewById(R.id.backlogTaskList);
@@ -93,7 +105,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_backlog, menu);
+        getMenuInflater().inflate(R.menu.menu_backlog, menu);
         setActionBarTitle();
         return true;
     }
@@ -117,6 +129,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
 
     public void onStartBuildingSprint() {
         buildSprintActionMode = true;
+        newTaskButton.setVisibility(View.INVISIBLE);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(getLayoutInflater().inflate(R.layout.create_sprint_dialog, null))
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
@@ -154,8 +167,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                buildSprintActionMode = false;
-                updateListViews();
+                onSprintClosed();
             }
         });
         dialog.show();
@@ -169,11 +181,14 @@ public class ViewBacklogActivity extends ActionBarActivity {
         }
         saveSprint();
         onSprintClosed();
+
+        Intent intent = new Intent(BacklogActivity.this, SprintActivity.class);
+        startActivity(intent);
     }
 
     public void onSprintItemAdded(String title) {
         int taskId = Task.getIdFromTitle(title);
-        Task task = DataUtils.getInstance(ViewBacklogActivity.this).findTaskById(taskId);
+        Task task = DataUtils.getInstance(BacklogActivity.this).findTaskById(taskId);
         sprint.addTask(task);
         backlog.removeTask(task);
         updateListViews();
@@ -181,16 +196,25 @@ public class ViewBacklogActivity extends ActionBarActivity {
 
     public void onSprintItemRemoved(String title) {
         int taskId = Task.getIdFromTitle(title);
-        Task task = DataUtils.getInstance(ViewBacklogActivity.this).findTaskById(taskId);
+        Task task = DataUtils.getInstance(BacklogActivity.this).findTaskById(taskId);
         sprint.removeTask(task);
         backlog.addTask(task);
         updateListViews();
+    }
+
+    public void onSprintCancelled() {
+        for (Task task : sprint.getTasks()) {
+            backlog.addTask(task);
+        }
+        onSprintClosed();
     }
 
     public void onSprintClosed() {
         buildSprintActionMode = false;
 
         sprint = new Sprint();
+
+        newTaskButton.setVisibility(View.VISIBLE);
 
         // reset the backlog's onClickListener
         updateListViews();
@@ -243,7 +267,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
             cancelSprintButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onSprintClosed();
+                    onSprintCancelled();
                 }
             });
 
@@ -303,7 +327,7 @@ public class ViewBacklogActivity extends ActionBarActivity {
     }
 
     public void setActionBarTitle() {
-        ActionBar actionBar = ViewBacklogActivity.this.getSupportActionBar();
+        ActionBar actionBar = BacklogActivity.this.getActionBar();
         if (actionBar == null) {
             return;
         }
@@ -311,13 +335,13 @@ public class ViewBacklogActivity extends ActionBarActivity {
         if (buildSprintActionMode && newSprintTitle != null) {
             actionBar.setTitle(newSprintTitle);
         } else {
-            actionBar.setTitle(R.string.title_activity_view_backlog);
+            actionBar.setTitle(R.string.title_activity_backlog);
         }
     }
 
     public void startTaskDetails(View view) {
         TextView text = (TextView) view.findViewById(R.id.name);
-        Intent intent = new Intent(ViewBacklogActivity.this, ViewTaskActivity.class);
+        Intent intent = new Intent(BacklogActivity.this, ViewTaskActivity.class);
         intent.putExtra(ViewTaskActivity.VIEWING_TASK_TITLE, text.getText().toString());
         startActivity(intent);
     }

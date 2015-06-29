@@ -41,10 +41,10 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
             TextView title = (TextView) v.findViewById(R.id.name);
             TextView priority = (TextView) v.findViewById(R.id.priority);
             if (title != null) {
-                title.setText(task.getId()+"-"+task.getName());
+                title.setText(task.getId()+" - "+task.getName());
             }
             if (priority != null) {
-                priority.setText("Priority: " + task.getPriority());
+                priority.setText(Integer.toString(task.getPriority()));
             }
         }
 

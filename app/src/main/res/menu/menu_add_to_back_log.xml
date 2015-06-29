@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.petertemplin.scrummaster.activity.AddToBacklogActivity">
+    <item android:id="@+id/action_confirm" android:title="Confirm"
+        android:icon="@drawable/ic_action_accept"
+        android:showAsAction="always" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

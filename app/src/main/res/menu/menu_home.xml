@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".HomeActivity">
+    <item android:id="@+id/action_search_tasks"
+        android:title="Tasks"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="always" />
     <item android:id="@+id/action_reset_database"
         android:title="Reset All Data"
         app:showAsAction="never" />

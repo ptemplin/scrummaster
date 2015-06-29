@@ -4,37 +4,80 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
-    <Button android:id="@+id/addToBacklogButton"
-        android:layout_height="40dp"
+    <RelativeLayout android:id="@+id/backlogDetails"
         android:layout_width="match_parent"
-        android:text="Add task to backlog"
-        android:textAlignment="center">
-    </Button>
-    <Button android:id="@+id/viewBacklogButton"
-        android:layout_height="40dp"
-        android:layout_width="match_parent"
-        android:text="View backlog"
-        android:textAlignment="center">
-    </Button>
-    <Button android:id="@+id/currentSprintButton"
-        android:layout_height="40dp"
-        android:layout_width="match_parent"
-        android:text="View current sprint"
-        android:textAlignment="center">
-    </Button>
-    <Button android:id="@+id/buildSprintButton"
-        android:layout_height="40dp"
-        android:layout_width="match_parent"
-        android:text="Build sprint"
-        android:textAlignment="center">
-    </Button>
-    <Button android:id="@+id/completedTasksButton"
-        android:layout_height="40dp"
-        android:layout_width="match_parent"
-        android:text="View completed tasks"
-        android:textAlignment="center">
-    </Button>
+        android:layout_height="80dip">
+        <TextView android:id="@+id/backlogItemsCount"
+            android:layout_height="26dip"
+            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_background"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
+            android:layout_marginLeft="15dip"
+            android:textColor="@color/pureWhite"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="0">
 
+        </TextView>
+        <TextView android:id="@+id/backlogLabel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="25sp"
+            android:textColor="#ff666666"
+            android:text="Backlog">
 
+            </TextView>
+        <Button android:id="@+id/addItemToBacklogButton"
+            android:layout_width="35dip"
+            android:layout_height="35dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/ic_action_new"
+            />
+    </RelativeLayout>
+    <View style="@style/Divider">
+    </View>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:padding="8dip"
+        android:textColor="@color/scrumGreen"
+        android:text="Sprints">
+
+        </TextView>
+    <View style="@style/ListItemDivider"></View>
+    <RelativeLayout android:id="@+id/buildSprintButton"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <ImageView android:id="@+id/newSprintImageHomeActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_action_sprint"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dip"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:layout_toRightOf="@id/newSprintImageHomeActivity"
+            android:layout_marginLeft="10dip"
+            android:textColor="#333333"
+            android:text="New Sprint"/>
+    </RelativeLayout>
+    <View style="@style/ListItemDivider"></View>
+    <ListView android:id="@+id/sprintList"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+    </ListView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
@@ -39,29 +40,44 @@ public class SprintTaskListAdapter extends ArrayAdapter<Task> {
 
         if (task != null) {
             TextView title = (TextView) v.findViewById(R.id.name);
-            TextView priority = (TextView) v.findViewById(R.id.priority);
+            ImageView priority = (ImageView) v.findViewById(R.id.priority);
             View progress = (View) v.findViewById(R.id.progress);
 
             if (title != null) {
-                title.setText(task.getId()+"-"+task.getName());
+                title.setText(task.getId()+" - "+task.getName());
             }
             if (priority != null) {
-                priority.setText("Priority: " + task.getPriority());
+                int resId = 0;
+                switch(task.getPriority()) {
+                    case 0:
+                        resId = R.drawable.priority_explosion_lowest;
+                        break;
+                    case 1:
+                        resId = R.drawable.priority_explosion_low;
+                        break;
+                    case 2:
+                        resId = R.drawable.priority_explosion_medium;
+                        break;
+                    case 3:
+                        resId = R.drawable.priority_explosion_high;
+                        break;
+                    case 4:
+                    case 5:
+                        resId = R.drawable.priority_explosion_highest;
+                        break;
+                }
+                if (resId != 0) {
+                    priority.setBackgroundResource(resId);
+                }
             }
             if (progress != null && task.getProgress() != null) {
                 switch(task.getProgress()) {
-                    case "Back Burner":
-                    case "Not Started":
-                        progress.setBackgroundColor(0xff0000ff);
-                        break;
                     case "Started":
-                        progress.setBackgroundColor(0xffbb8833);
-                        break;
                     case "Testing":
-                        progress.setBackgroundColor(0xffaa0066);
+                        progress.setBackgroundColor(getContext().getResources().getColor(R.color.lightGreen));
                         break;
                     case "Complete":
-                        progress.setBackgroundColor(0xff00ff00);
+                        progress.setBackgroundColor(getContext().getResources().getColor(R.color.scrumGreen));
                         break;
                     default:
                         progress.setBackgroundColor(0x00000000);

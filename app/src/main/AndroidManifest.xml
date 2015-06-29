@@ -25,10 +25,6 @@
                 android:value=".activity.HomeActivity" />
         </activity>
         <activity
-            android:name=".activity.ViewBacklogActivity"
-            android:label="@string/title_activity_view_backlog" >
-        </activity>
-        <activity
             android:name=".activity.ViewTaskActivity"
             android:label="@string/title_activity_view_task"
             android:parentActivityName=".activity.HomeActivity" >
@@ -41,8 +37,16 @@
             android:label="@string/title_activity_sprint" >
         </activity>
         <activity
-            android:name=".activity.CompletedTasksActivity"
-            android:label="@string/title_activity_completed_tasks" >
+            android:name=".activity.BacklogActivity"
+            android:label="@string/title_activity_backlog" >
+        </activity>
+        <activity
+            android:name=".activity.TaskListActivity"
+            android:label="@string/title_activity_task_list" >
+        </activity>
+        <activity
+            android:name=".adapter.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

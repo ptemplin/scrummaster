@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.petertemplin.scrummaster.activity.CompletedTasksActivity">
 
+    <Spinner
+        android:id="@+id/progressSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Spinner>
     <ListView android:id="@+id/completedTaskList"
         android:layout_width="match_parent"
         android:layout_height="0dp"

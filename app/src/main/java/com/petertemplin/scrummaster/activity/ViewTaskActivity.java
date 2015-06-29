@@ -1,5 +1,6 @@
 package com.petertemplin.scrummaster.activity;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +17,7 @@ import com.petertemplin.scrummaster.models.Task;
 import com.petertemplin.scrummaster.util.DateUtils;
 
 
-public class ViewTaskActivity extends ActionBarActivity {
+public class ViewTaskActivity extends Activity {
 
     public static final String VIEWING_TASK_TITLE = "taskTitle";
 
@@ -41,7 +42,7 @@ public class ViewTaskActivity extends ActionBarActivity {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         // Apply the adapter to the spinner
         progress.setAdapter(adapter);
-        progress.setSelection(getPositionOfProgressByName());
+        progress.setSelection(getPositionOfProgressByName(task));
         progress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,7 +107,7 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
 
         TextView pointsText = (TextView) findViewById(R.id.viewTaskPoints);
-        pointsText.setText(Task.DEFAULT_POINTS + " Points");
+        pointsText.setText(task.getPoints() + " Points");
 
         TextView startedText = (TextView) findViewById(R.id.viewTaskStartDate);
         if (task.getStartedDate() == null || task.getStartedDate().equals(DateUtils.EMPTY_DATE)) {
@@ -123,8 +124,8 @@ public class ViewTaskActivity extends ActionBarActivity {
         }
     }
 
-    private int getPositionOfProgressByName() {
-        String progress = task.getProgress();
+    private static int getPositionOfProgressByName(Task t) {
+        String progress = t.getProgress();
         if (progress == null || progress.equals("Back Burner")) {
             return 0;
         } else if (progress.equals("Not Started")){

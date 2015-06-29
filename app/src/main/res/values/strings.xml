@@ -4,7 +4,7 @@
     <string name="app_name">Scrum Master</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_to_back_log">New Backlog Task</string>
-    <string name="title_activity_view_backlog">Backlog</string>
+    <string name="title_activity_backlog">Backlog</string>
     <string name="title_activity_view_task">Task</string>
     <string name="title_activity_sprint">Active Sprint</string>
     <string name="title_activity_completed_tasks">Completed Tasks</string>
@@ -16,5 +16,9 @@
         <item>Testing</item>
         <item>Complete</item>
     </string-array>
+
+    <string name="title_activity_task_list">Tasks</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

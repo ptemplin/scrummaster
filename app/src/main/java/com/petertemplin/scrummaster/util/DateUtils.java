@@ -1,5 +1,7 @@
 package com.petertemplin.scrummaster.util;
 
+import com.petertemplin.scrummaster.models.Sprint;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -125,15 +127,15 @@ public class DateUtils {
         long hours = minutes / MINUTES_IN_HOUR;
         minutes = minutes % MINUTES_IN_HOUR;
         if (weeks != 0) {
-            return weeks + " weeks " + days + " days";
+            return weeks + "w " + days + "d";
         } else if (days != 0) {
-            return days + " days " + hours + " hours";
+            return days + "d " + hours + "hr";
         } else if (hours != 0) {
-            return hours + " hours " + minutes + " minutes";
+            return hours + " hr " + minutes + " min";
         } else if (minutes != 0) {
-            return minutes + " minutes";
+            return minutes + " min";
         } else {
-            return "No time";
+            return Sprint.DEFAULT_TIME_REMAINING;
         }
     }
 

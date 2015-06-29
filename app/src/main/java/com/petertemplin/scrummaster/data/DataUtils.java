@@ -166,10 +166,17 @@ public class DataUtils {
         database.execSQL(updateTasksQuery);
     }
 
-    public Sprint getLatestSprint() {
-        final String getSprintQuery = "select * from " + TABLE_SPRINT + " order by id desc;";
+    public Sprint getSprintById(int id) {
+        final String getSprintQuery = "select * from " + TABLE_SPRINT +
+                " where " + COLUMN_SPRINT_ID + "=" + id + " order by id desc;";
         Cursor cursor = database.rawQuery(getSprintQuery, null);
-        Sprint sprint = getSprintFromCursor(cursor);
+        List<Sprint> sprints = getSprintsFromCursor(cursor);
+        Sprint sprint = null;
+        if (!sprints.isEmpty()) {
+            sprint = sprints.get(0);
+        } else {
+            return null;
+        }
 
         final String getTasksQuery = "select * from " + TABLE_TASK + " where " +
                 COLUMN_SPRINT + "=" + sprint.getId() + ";";
@@ -177,6 +184,19 @@ public class DataUtils {
         sprint.setTasks(getTasksFromCursor(cursor));
 
         return sprint;
+    }
+
+    public List<Sprint> getAllSprints() {
+        final String getSprintsQuery = "select * from " + TABLE_SPRINT + " order by id desc";
+        Cursor cursor = database.rawQuery(getSprintsQuery, null);
+         return getSprintsFromCursor(cursor);
+    }
+
+    public int getSizeOfSprint(int sprintId) {
+        final String getTasksQuery = "select * from " + TABLE_TASK + " where " +
+                COLUMN_SPRINT + "=" + sprintId + ";";
+        Cursor cursor = database.rawQuery(getTasksQuery, null);
+        return cursor.getCount();
     }
 
     public List<Task> getTasksFromBacklog() {
@@ -189,9 +209,24 @@ public class DataUtils {
         return getTasksFromCursor(cursor);
     }
 
-    public List<Task> getCompletedTasks() {
+    public int getSizeOfBacklog() {
+        // Get a cursor on the header table "categories"
+        final String getTasksQuery = "select * from " + TABLE_TASK + " where (" +
+                COLUMN_SPRINT + "=0 or " + COLUMN_SPRINT + " is null) AND (" +
+                COLUMN_PROGRESS + "='Back Burner' or " + COLUMN_PROGRESS + "='Not Started' or " +
+                COLUMN_PROGRESS + " is null);";
+        Cursor cursor = database.rawQuery(getTasksQuery, null);
+        int size= 0;
+        if (cursor != null) {
+            cursor.moveToFirst();
+            size = cursor.getCount();
+        }
+        return size;
+    }
+
+    public List<Task> getTasksByProgress(String progress) {
         final String getTasksQuery = "select * from " + TABLE_TASK + " where " +
-                COLUMN_PROGRESS + "='Complete';";
+                COLUMN_PROGRESS + "='" + progress + "';";
         Cursor cursor = database.rawQuery(getTasksQuery, null);
         return getTasksFromCursor(cursor);
     }
@@ -285,35 +320,44 @@ public class DataUtils {
         return tasks;
     }
 
-    public Sprint getSprintFromCursor(Cursor cursor) {
-        Sprint sprint = new Sprint();
+    public List<Sprint> getSprintsFromCursor(Cursor cursor) {
+        List<Sprint> sprints = new ArrayList<>();
 
-        try {
-            cursor.moveToFirst();
-            sprint.setId(cursor.getInt(0));
-            sprint.setName(cursor.getString(1));
-        } catch (Exception e) {}
-        try {
-            sprint.setDescription(cursor.getString(2));
-        }catch (Exception e) {}
-        try {
-            sprint.setStartDate(cursor.getString(3));
-        } catch (Exception e) {}
-        try {
-            sprint.setEndDate(cursor.getString(4));
-        } catch (Exception e) {}
-        try {
-            sprint.setDuration(cursor.getString(5));
-        } catch (Exception e) {}
-        try {
-            sprint.setStarted(cursor.getString(6).equals("true"));
-        } catch (Exception e) {}
-        try {
-            sprint.setProject(cursor.getInt(7));
-        } catch (Exception e) {}
+        cursor.moveToFirst();
+        // Iterate through the header table building a list of categories
+        while (!cursor.isAfterLast()) {
+            Sprint sprint = new Sprint();
 
+            try {
+                sprint.setId(cursor.getInt(0));
+                sprint.setName(cursor.getString(1));
+            } catch (Exception e) {}
+            try {
+                sprint.setDescription(cursor.getString(2));
+            }catch (Exception e) {}
+            try {
+                sprint.setStartDate(cursor.getString(3));
+            } catch (Exception e) {}
+            try {
+                sprint.setEndDate(cursor.getString(4));
+            } catch (Exception e) {}
+            try {
+                sprint.setDuration(cursor.getString(5));
+            } catch (Exception e) {}
+            try {
+                sprint.setStarted(cursor.getString(6).equals("true"));
+            } catch (Exception e) {}
+            try {
+                sprint.setProject(cursor.getInt(7));
+            } catch (Exception e) {}
+            sprints.add(sprint);
+            cursor.moveToNext();
+        }
+
+        // make sure to close the cursor
         cursor.close();
-        return sprint;
+
+        return sprints;
     }
 
     public void saveTask(Task task) {

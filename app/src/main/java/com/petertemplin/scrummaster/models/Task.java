@@ -155,7 +155,7 @@ public class Task {
     }
 
     public static int getIdFromTitle(String title) {
-        title = title.substring(0, title.indexOf("-"));
+        title = title.substring(0, title.indexOf(" "));
         int taskId = 0;
         try {
             taskId = Integer.parseInt(title);
@@ -169,7 +169,7 @@ public class Task {
         if (id == 0) {
             return name;
         }
-        return id + "-" + name;
+        return id + " - " + name;
     }
 
     public void save(Context context) {

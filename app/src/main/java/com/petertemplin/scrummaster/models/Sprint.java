@@ -22,6 +22,7 @@ public class Sprint extends AbstractTaskList{
     public static String DEFAULT_START = DateUtils.EMPTY_DATE;
     public static String DEFAULT_END = DateUtils.EMPTY_DATE;
     public static String DEFAULT_DURATION = "No time limit";
+    public static String DEFAULT_TIME_REMAINING = "Done";
 
     private int id = 0;
 
@@ -84,13 +85,13 @@ public class Sprint extends AbstractTaskList{
             String[] nums = duration.split(" ");
             String durationS = "";
             if (!nums[0].equals("0")) {
-                durationS += nums[0] + " weeks ";
+                durationS += nums[0] + "w ";
             }
             if (!nums[1].equals("0")) {
-                durationS += nums[1] + " days ";
+                durationS += nums[1] + "d ";
             }
             if (!nums[2].equals("0")) {
-                durationS += nums[2] + " hours ";
+                durationS += nums[2] + "hr ";
             }
             if (!durationS.isEmpty()) {
                 return durationS;
@@ -143,8 +144,12 @@ public class Sprint extends AbstractTaskList{
             if (millisRemaining < 0) {
                 millisRemaining = 0;
             }
-            return DateUtils.formatMillisAsTime(millisRemaining) + " remaining";
+            return DateUtils.formatMillisAsTime(millisRemaining);
         }
         return "";
+    }
+
+    public int findSizeLazy(Context context) {
+        return DataUtils.getInstance(context).getSizeOfSprint(id);
     }
 }
