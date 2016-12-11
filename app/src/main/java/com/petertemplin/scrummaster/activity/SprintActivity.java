@@ -8,13 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
-import com.petertemplin.scrummaster.adapter.SprintTaskListAdapter;
+import com.petertemplin.scrummaster.adapter.TaskListAdapter;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Sprint;
 import com.petertemplin.scrummaster.models.Task;
@@ -48,8 +47,8 @@ public class SprintActivity extends Activity {
         // set the details
         setSprintDetails();
 
-        SprintTaskListAdapter adapter = new SprintTaskListAdapter(this,
-                R.layout.sprint_task_list_item, currentSprint.getTasks());
+        TaskListAdapter adapter = new TaskListAdapter(this,
+                R.layout.task_list_item, currentSprint.getTasks());
         sprintTaskList.setAdapter(adapter);
         sprintTaskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,7 +80,8 @@ public class SprintActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

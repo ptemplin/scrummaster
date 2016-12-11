@@ -2,24 +2,21 @@ package com.petertemplin.scrummaster.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
 import com.petertemplin.scrummaster.adapter.SprintListAdapter;
-import com.petertemplin.scrummaster.adapter.TaskListAdapter;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Sprint;
+import com.petertemplin.scrummaster.models.Task;
 
 import java.util.List;
 
@@ -79,6 +76,13 @@ public class HomeActivity extends Activity {
                 startActivity(intent);
             }
         });
+        sprintList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                removeSprint((Sprint)parent.getItemAtPosition(position));
+                return true;
+            }
+        });
     }
 
     @Override
@@ -97,7 +101,8 @@ public class HomeActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.action_reset_database) {
             resetDatabase();
         } else if (id == R.id.action_search_tasks) {
@@ -110,5 +115,14 @@ public class HomeActivity extends Activity {
 
     public void resetDatabase() {
         DataUtils.getInstance(this).resetDatabase(this);
+    }
+
+    public void removeSprint(Sprint sprint) {
+        DataUtils.getInstance(this).removeSprint(sprint.getId());
+        onResume();
+    }
+
+    public void startEditSprintActionMode(Sprint sprint) {
+
     }
 }

@@ -1,5 +1,6 @@
-package com.petertemplin.scrummaster.adapter;
+package com.petertemplin.scrummaster.activity;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 
 import com.petertemplin.scrummaster.R;
 
-public class SettingsActivity extends ActionBarActivity {
+public class SettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

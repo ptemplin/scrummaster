@@ -5,13 +5,11 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,9 +23,6 @@ import com.petertemplin.scrummaster.models.Backlog;
 import com.petertemplin.scrummaster.models.Sprint;
 import com.petertemplin.scrummaster.models.Task;
 import com.petertemplin.scrummaster.util.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class BacklogActivity extends Activity {
@@ -71,12 +66,6 @@ public class BacklogActivity extends Activity {
             }
         });
 
-        // Setup the list of tasks
-        backlogTaskList = (ListView) findViewById(R.id.backlogTaskList);
-        DataUtils manager = DataUtils.getInstance(this);
-
-        backlog.setTasks(manager.getTasksFromBacklog());
-
         // retrieve the building sprint state
         if (savedInstanceState != null) {
             buildSprintActionMode = savedInstanceState.getBoolean(BUILDING_SPRINT);
@@ -85,16 +74,23 @@ public class BacklogActivity extends Activity {
             buildSprintActionMode = true;
         }
 
-        if(buildSprintActionMode != null && buildSprintActionMode) {
-            onStartBuildingSprint();
-        }
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Setup the list of tasks
+        backlogTaskList = (ListView) findViewById(R.id.backlogTaskList);
+        DataUtils manager = DataUtils.getInstance(this);
+
+        backlog.setTasks(manager.getTasksFromBacklog());
+
         updateListViews();
+
+        if(buildSprintActionMode != null && buildSprintActionMode) {
+            onStartBuildingSprint();
+        }
     }
 
     @Override
@@ -119,7 +115,8 @@ public class BacklogActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.createNewSprintAction) {
             onStartBuildingSprint();
         }
@@ -323,6 +320,13 @@ public class BacklogActivity extends Activity {
                     startTaskDetails(view);
                 }
             });
+            backlogTaskList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    removeTask((Task)parent.getItemAtPosition(position));
+                    return true;
+                }
+            });
         }
     }
 
@@ -348,5 +352,11 @@ public class BacklogActivity extends Activity {
 
     public void saveSprint() {
         DataUtils.getInstance(this).addNewSprint(sprint);
+    }
+
+    public void removeTask(Task task) {
+        DataUtils.getInstance(this).removeTask(task.getId());
+        backlog.removeTask(task.getId());
+        updateBacklogListView();
     }
 }

@@ -441,4 +441,14 @@ public class DataUtils {
                 + " where " + COLUMN_SPRINT_ID + "=" + sprint.getId() + ";";
         database.execSQL(UPDATE_SPRINT);
     }
+
+    public void removeSprint(int id) {
+        String REMOVE_SPRINT = "delete from " + TABLE_SPRINT + " where \"" + COLUMN_SPRINT_ID + "\"=" + id;
+        database.execSQL(REMOVE_SPRINT);
+    }
+
+    public void removeTask(int id) {
+        String REMOVE_TASK = "delete from " + TABLE_TASK + " where \"" + COLUMN_ID + "\"=" + id;
+        database.execSQL(REMOVE_TASK);
+    }
 }

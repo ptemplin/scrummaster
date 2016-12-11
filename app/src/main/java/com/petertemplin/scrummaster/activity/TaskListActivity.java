@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.petertemplin.scrummaster.R;
-import com.petertemplin.scrummaster.adapter.SprintTaskListAdapter;
 import com.petertemplin.scrummaster.adapter.TaskListAdapter;
 import com.petertemplin.scrummaster.data.DataUtils;
 import com.petertemplin.scrummaster.models.Task;
@@ -78,7 +77,8 @@ public class TaskListActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -100,8 +100,8 @@ public class TaskListActivity extends Activity {
         // Setup the list of tasks
         DataUtils manager = DataUtils.getInstance(this);
         tasks = manager.getTasksByProgress(progressChoice);
-        SprintTaskListAdapter adapter = new SprintTaskListAdapter(TaskListActivity.this,
-                R.layout.sprint_task_list_item, tasks);
+        TaskListAdapter adapter = new TaskListAdapter(TaskListActivity.this,
+                R.layout.task_list_item, tasks);
         ListView tasksView = (ListView) findViewById(R.id.completedTaskList);
         tasksView.setAdapter(adapter);
         tasksView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
